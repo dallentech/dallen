@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Celebración en camino!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f0e3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        #loading-screen {
+            text-align: center;
+        }
+        .cake-icon {
+            font-size: 5em;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 1.2em;
+            color: #333;
+        }
+        #invitation-container {
+            display: none; /* Ocultar la invitación inicialmente */
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1s ease-out;
+            position: relative; /* Para el confeti absoluto */
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        h2 {
+            color: #ff6b6b;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.1em;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #00aaff;
+            transition: color 0.3s ease;
+        }
+        .highlight:hover {
+            color: #0056b3;
+        }
+        .date-time {
+            font-style: italic;
+            color: #555;
+            font-size: 1em;
+        }
+        .heart {
+            color: #ff6b6b;
+            font-size: 1.5em;
+            animation: pulse 1.5s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        .celebration {
+            font-size: 1.2em;
+            color: #ff8f00;
+            font-weight: bold;
+        }
+        .my-birthday {
+            color: #2ecc71;
+            font-weight: bolder;
+        }
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none; /* Para que no interfiera con la invitación */
+        }
+        .confetti {
+            position: absolute;
+            background-color: #f06;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: confettiFall 5s ease-in-out forwards,
+                       confettiRotate 3s linear infinite;
+        }
+        @keyframes confettiFall {
+            0% { top: -10%; opacity: 1; }
+            100% { top: 110%; opacity: 0; }
+        }
+        @keyframes confettiRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">
+        <div class="cake-icon">🎂</div>
+        <p class="loading-text">Preparando la sorpresa...</p>
+    </div>
+
+    <div id="invitation-container">
+        <h2>¡Doble Celebración! <span class="heart">🎉</span></h2>
+        <p>¡Hola hermanos!</p>
+        <p>Este <span class="highlight">domingo 27</span> quiero invitarlos a mi casa para celebrar <span class="my-birthday">mi cumpleaños</span> y el de nuestra querida <span class="celebration">Pama</span>.</p>
+        <p>Vamos a tener una cenita familiar desde las <span class="highlight">6:30 PM</span>.</p>
+        <p>Me encantaría que puedan venir, compartir un rato bonito y celebrar juntos como siempre.</p>
+        <p class="highlight">¡Los espero con muchísimo cariño! <span class="heart">💖</span></p>
+        <div class="confetti-container" id="confetti">
+            </div>
+    </div>
+
+    <script>
+        const loadingScreen = document.getElementById('loading-screen');
+        const invitationContainer = document.getElementById('invitation-container');
+        const confettiContainer = document.getElementById('confetti');
+        const colors = ['#f06', '#ffc107', '#4caf50', '#2196f3', '#9c27b0'];
+        let confettiCreated = false; // Bandera para evitar crear confeti múltiples veces
+
+        function createConfetti() {
+            if (!confettiCreated) {
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.animationDelay = `${Math.random() * 3}s`;
+                    confetti.style.animationDuration = `${3 + Math.random() * 3}s`;
+                    confettiContainer.appendChild(confetti);
+                }
+                confettiCreated = true;
+            }
+        }
+
+        // Simular un tiempo de carga (ej. 1.5 segundos)
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            invitationContainer.style.display = 'block';
+            createConfetti(); // Iniciar la creación del confeti al mostrar la invitación
+        }, 1500); // Cambiado a 1500 milisegundos = 1.5 segundos
+    </script>
+</body>
+</html>
